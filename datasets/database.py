@@ -5,7 +5,7 @@ import logging
 from sqlalchemy import Engine, MetaData, Table, Column, create_mock_engine, select, insert
 from sqlalchemy.schema import CreateSchema, CreateTable
 
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 class Database:
     def engine(self) -> Engine:
@@ -43,7 +43,7 @@ class MutableDatabase(Database):
         return self._schema
 
     def add_schema(self, schema: str):
-        logger.info(f'Add schema {schema}')
+        logging.info(f'Add schema {schema}')
         with self.engine().connect() as conn:
             conn.execute(CreateSchema(schema, if_not_exists=True))
             conn.commit()
@@ -53,7 +53,7 @@ class MutableDatabase(Database):
         self._schema = schema
         
     def add(self, source: Database):
-        logger.info(f'Add {source}')
+        logging.info(f'Add {source}')
         self.add_schema(source.schema())
         with self.engine().connect() as conn:
             for table in source.tables():
@@ -65,10 +65,10 @@ class MutableDatabase(Database):
             # Push data
             with source.engine().connect() as src_conn:
                 for table in source.tables():
-                    logger.info(f'Loading data from {table}')
+                    logging.info(f'Loading data from {table}')
                     rows = src_conn.execute(select(table))
                     for row in rows:
-                        logger.info(row)
+                        logging.info(f'{table} - {row}')
                         conn.execute(insert(table).values(row))
                     conn.commit()
 
