@@ -7,6 +7,8 @@ from sqlalchemy.schema import CreateSchema, CreateTable
 
 logging.basicConfig(level=logging.DEBUG)
 
+MAX_TABLE_SIZE = 10000
+
 class Database:
     def engine(self) -> Engine:
         """Return the SQL engine"""
@@ -43,7 +45,7 @@ class MutableDatabase(Database):
         return self._schema
 
     def add_schema(self, schema: str):
-        logging.info(f'Add schema {schema}')
+        logging.debug(f'Add schema {schema}')
         with self.engine().connect() as conn:
             conn.execute(CreateSchema(schema, if_not_exists=True))
             conn.commit()
@@ -53,7 +55,7 @@ class MutableDatabase(Database):
         self._schema = schema
         
     def add(self, source: Database):
-        logging.info(f'Add {source}')
+        logging.debug(f'Add {source}')
         self.add_schema(source.schema())
         with self.engine().connect() as conn:
             for table in source.tables():
@@ -65,10 +67,10 @@ class MutableDatabase(Database):
             # Push data
             with source.engine().connect() as src_conn:
                 for table in source.tables():
-                    logging.info(f'Loading data from {table}')
-                    rows = src_conn.execute(select(table))
+                    logging.debug(f'Loading data from {table}')
+                    rows = src_conn.execute(select(table).limit(MAX_TABLE_SIZE))
                     for row in rows:
-                        logging.info(f'{table} - {row}')
+                        logging.debug(f'{table} - {row}')
                         conn.execute(insert(table).values(row))
                     conn.commit()
 
