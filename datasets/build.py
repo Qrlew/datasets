@@ -1,19 +1,16 @@
 from sqlalchemy import create_engine, MetaData, text
-from datasets import postgresql
+from sqlalchemy.schema import CreateSchema
+from datasets.sources.financial import Financial
+from datasets.databases.postgresql import PostgreSQL
 
-# # Connect to the [Relational Dataset Repository](https://relational.fit.cvut.cz/)
-# input_engine = create_engine("mysql+pymysql://guest:relational@relational.fit.cvut.cz:3306")
-# metadata = MetaData()
-# metadata.reflect(bind=input_engine, schema='financial')
+# Get a source db
+input = Financial()
+for table in input.tables():
+    print(table)
 
-# for table in metadata.tables:
-#     print(table)
-
-# with input_engine.connect() as connection:
-#     result = connection.execute(text('SELECT * FROM financial.account'))
-#     for row in result:
-#         print(row)
-
-output_engine = postgresql.create_engine(port=5433)
-
-print(output_engine)
+# Copy to Postgresql
+output = PostgreSQL(port=5432)
+output.add_schema(input.schema())
+for table in input.tables():
+    print(table)
+    table.create(output)
