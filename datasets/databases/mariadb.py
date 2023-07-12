@@ -4,12 +4,12 @@ import subprocess
 from sqlalchemy import create_engine, Engine, MetaData, text
 from datasets.database import MutableDatabase
 
-NAME: str = "qrlew-psql"
-PORT: int = 5432
-USER: str = "postgres"
-PASSWORD: str = "qrlew-psql"
+NAME: str = "qrlew-mariadb"
+PORT: int = 3306
+USER: str = "qrlew"
+PASSWORD: str = "qrlew-mariadb"
 
-class PostgreSQL(MutableDatabase):
+class MariaDB(MutableDatabase):
     def __init__(self, name=NAME, user=USER, password=PASSWORD, port=PORT) -> None:
         self.name = name
         self.user = user
@@ -19,11 +19,10 @@ class PostgreSQL(MutableDatabase):
     def try_get_existing(self) -> Optional[Engine]:
         """Try to connect to postgresql"""
         try:
-            engine = create_engine(f'postgresql+psycopg://{self.user}:{self.password}@localhost:{self.port}')
+            engine = create_engine(f'mysql+pymysql://{self.user}:{self.password}@localhost:{self.port}')
             # Try to connect
             with engine.connect() as conn:
-                tables = conn.execute(text('''SELECT * FROM pg_catalog.pg_tables WHERE schemaname='public' '''))
-                for table in tables:
+                for table in conn.tables():
                     print(table)
             return engine
         except:
@@ -40,9 +39,11 @@ class PostgreSQL(MutableDatabase):
                 '-v', '/tmp:/tmp',
                 '--name', self.name,
                 '--detach', '--rm',
-                '--env', f'POSTGRES_PASSWORD={PASSWORD}',
-                '--port', f'{self.port}:5432',
-                'postgres'])
+                '--env', f'MARIADB_USER={self.user}',
+                '--env', f'MARIADB_PASSWORD={self.password}',
+                '--env', f'MARIADB_ROOT_PASSWORD={self.password}',
+                '--port', f'{self.port}:3306',
+                'mariadb:latest'])
         attempt = 0
         while subprocess.run(['docker', 'exec', self.name, 'pg_isready']).returncode != 0 and attempt<10:
             print("Waiting postgresql to be ready...")
