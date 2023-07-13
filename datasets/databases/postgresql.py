@@ -15,6 +15,7 @@ class PostgreSQL(MutableDatabase):
         self.user = user
         self.password = password
         self.port = port
+        self.engine()
 
     def try_get_existing(self) -> Optional[Engine]:
         """Try to connect to postgresql"""
@@ -66,5 +67,14 @@ class PostgreSQL(MutableDatabase):
                         '--host=localhost',
                         f'--username={self.user}',
                         '-Fp',
-                        '-n', 'financial',
+                        '-n', self.schema(),
                         '-f', path])
+    
+    def load(self, path: str) -> None:
+        """Load psql"""
+        subprocess.run(['docker', 'exec', self.name, 'pg_restore',
+                        '--host=localhost',
+                        f'--username={self.user}',
+                        '--dbname=public',
+                        '-n', self.schema(),
+                        path])

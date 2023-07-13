@@ -15,6 +15,7 @@ class MariaDB(MutableDatabase):
         self.user = user
         self.password = password
         self.port = port
+        self.engine()
 
     def try_get_existing(self) -> Optional[Engine]:
         """Try to connect to mariadb"""
@@ -58,7 +59,6 @@ class MariaDB(MutableDatabase):
         engine = self.try_get_existing()
         if engine is None:
             engine = self.try_get_container()
-        print(engine)
         assert(engine is not None)
         return engine
     
@@ -71,7 +71,7 @@ class MariaDB(MutableDatabase):
     def _dump(self, host: str, user: str, password: str, db: str, path: str) -> None:
         """Dump psql"""
         subprocess.run(['docker', 'exec', self.name, 'mariadb-dump',
-                        f'--host={host}'
+                        f'--host={host}',
                         f'--user={user}',
                         f'--password={password}',
                         db,

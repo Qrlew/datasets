@@ -8,13 +8,16 @@ from datasets.databases.mariadb import MariaDB
 # Get a source db
 input = Financial()
 
-print(input)
-
 # Copy to Postgresql
-# output = PostgreSQL(port=5432)
-# output.set_schema('financial')
-# output.add(input)
-# output.dump('/tmp/financial')
+output = PostgreSQL()
+output.set_schema('financial')
+output.add(input)
+output.dump('/tmp/pg_financial')
 
-db = MariaDB()
-db.engine()
+# db = MariaDB()
+# db.engine()
+# db._dump('relational.fit.cvut.cz', 'guest', 'relational', 'financial', '/tmp/financial')
+
+# output = PostgreSQL()
+# output.set_schema('financial')
+# output.load('/tmp/pg_financial')
