@@ -75,4 +75,5 @@ class MariaDB(MutableDatabase):
                         f'--user={user}',
                         f'--password={password}',
                         db,
+                        '--compatible=postgresql',
                         f'--result-file={path}'])

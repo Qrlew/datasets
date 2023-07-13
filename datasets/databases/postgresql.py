@@ -72,9 +72,14 @@ class PostgreSQL(MutableDatabase):
     
     def load(self, path: str) -> None:
         """Load psql"""
-        subprocess.run(['docker', 'exec', self.name, 'pg_restore',
+        # subprocess.run(['docker', 'exec', self.name, 'pg_restore',
+        #                 '--host=localhost',
+        #                 f'--username={self.user}',
+        #                 '--dbname=postgres',
+        #                 '-n', self.schema(),
+        #                 path])
+        subprocess.run(['docker', 'exec', self.name, 'psql',
                         '--host=localhost',
                         f'--username={self.user}',
-                        '--dbname=public',
-                        '-n', self.schema(),
-                        path])
+                        '--dbname=postgres',
+                        f'--file={path}'])

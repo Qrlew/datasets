@@ -9,15 +9,14 @@ from datasets.databases.mariadb import MariaDB
 input = Financial()
 
 # Copy to Postgresql
-output = PostgreSQL()
-output.set_schema('financial')
-output.add(input)
-output.dump('/tmp/pg_financial')
-
-# db = MariaDB()
-# db.engine()
-# db._dump('relational.fit.cvut.cz', 'guest', 'relational', 'financial', '/tmp/financial')
-
 # output = PostgreSQL()
 # output.set_schema('financial')
-# output.load('/tmp/pg_financial')
+# output.add(input)
+# output.dump('/tmp/pg_financial')
+
+# db = MariaDB()
+# db._dump('relational.fit.cvut.cz', 'guest', 'relational', 'financial', '/tmp/financial.sql')
+
+output = PostgreSQL()
+output.set_schema('financial')
+output.load('/tmp/financial.sql')
