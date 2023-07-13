@@ -4,6 +4,7 @@ from datasets.databases import PostgreSQL
 database = PostgreSQL()
 loader = Loader(database)
 
+# Build all dumps
 for source in [Financial(), IMDB(), Hepatitis()]:
     print(source)
     loader.load(source)
