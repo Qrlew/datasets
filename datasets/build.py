@@ -17,3 +17,4 @@ print(input)
 # output.dump('/tmp/financial')
 
 db = MariaDB()
+db.engine()

@@ -37,17 +37,17 @@ class PostgreSQL(MutableDatabase):
             subprocess.run([
                 'docker',
                 'run',
-                '-v', '/tmp:/tmp',
+                '--volume', '/tmp:/tmp',
                 '--name', self.name,
                 '--detach', '--rm',
                 '--env', f'POSTGRES_PASSWORD={PASSWORD}',
-                '--port', f'{self.port}:5432',
+                '--publish', f'{self.port}:5432',
                 'postgres'])
-        attempt = 0
-        while subprocess.run(['docker', 'exec', self.name, 'pg_isready']).returncode != 0 and attempt<10:
+        attempts = 0
+        while subprocess.run(['docker', 'exec', self.name, 'pg_isready']).returncode != 0 and attempts < 10:
             print("Waiting postgresql to be ready...")
             sleep(1)
-            attempt += 1
+            attempts += 1
         return self.try_get_existing()
 
     # Implements engine
@@ -63,8 +63,8 @@ class PostgreSQL(MutableDatabase):
     def dump(self, path: str) -> None:
         """Dump psql"""
         subprocess.run(['docker', 'exec', self.name, 'pg_dump',
-                        '-h', 'localhost',
-                        '-U', self.user,
+                        '--host=localhost',
+                        f'--username={self.user}',
                         '-Fp',
                         '-n', 'financial',
                         '-f', path])
