@@ -29,6 +29,10 @@ class Database:
         """Return all the tables"""
         return self.metadata().sorted_tables
 
+    def url(self) -> str:
+        """Return the canonical url"""
+        raise NotImplementedError()
+
     def dump(self) -> str:
         """Return the CREATE TABLE statement"""
         result = StringIO()

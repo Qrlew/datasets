@@ -3,6 +3,7 @@ from time import sleep
 import subprocess
 from sqlalchemy import create_engine, Engine, MetaData, text
 from datasets.database import MutableDatabase
+from datasets.network import Network
 
 NAME: str = "qrlew-psql"
 PORT: int = 5432
@@ -15,6 +16,7 @@ class PostgreSQL(MutableDatabase):
         self.user = user
         self.password = password
         self.port = port
+        self.net = Network().name
         self.engine()
 
     def try_get_existing(self) -> Optional[Engine]:
@@ -38,10 +40,12 @@ class PostgreSQL(MutableDatabase):
             subprocess.run([
                 'docker',
                 'run',
+                '--hostname', self.name,
                 '--volume', '/tmp:/tmp',
                 '--name', self.name,
                 '--detach', '--rm',
                 '--env', f'POSTGRES_PASSWORD={PASSWORD}',
+                '--net', self.net,
                 '--publish', f'{self.port}:5432',
                 'postgres'])
         attempts = 0
@@ -60,6 +64,9 @@ class PostgreSQL(MutableDatabase):
         assert(engine is not None)
         return engine
     
+    def url(self) -> str:
+        return f'postgresql://{self.user}:{self.password}@{self.name}:{self.port}/postgres'
+
     # Dump psql files
     def dump(self, path: str) -> None:
         """Dump psql"""
