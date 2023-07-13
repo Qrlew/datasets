@@ -22,7 +22,7 @@ class PostgreSQL(MutableDatabase):
     def try_get_existing(self) -> Optional[Engine]:
         """Try to connect to postgresql"""
         try:
-            engine = create_engine(f'postgresql+psycopg://{self.user}:{self.password}@localhost:{self.port}')
+            engine = create_engine(f'postgresql+psycopg://{self.user}:{self.password}@localhost:{self.port}/postgres')
             # Try to connect
             with engine.connect() as conn:
                 tables = conn.execute(text('''SELECT * FROM pg_catalog.pg_tables WHERE schemaname='public' '''))
@@ -79,12 +79,6 @@ class PostgreSQL(MutableDatabase):
     
     def load(self, path: str) -> None:
         """Load psql"""
-        # subprocess.run(['docker', 'exec', self.name, 'pg_restore',
-        #                 '--host=localhost',
-        #                 f'--username={self.user}',
-        #                 '--dbname=postgres',
-        #                 '-n', self.schema(),
-        #                 path])
         subprocess.run(['docker', 'exec', self.name, 'psql',
                         '--host=localhost',
                         f'--username={self.user}',

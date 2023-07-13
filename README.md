@@ -4,13 +4,12 @@
 
 To build the datasets, install the requirements with:
 ```bash
-pip install -r requirements
+poetry shell
 ```
 
-You may want to install this in a virtualenv:
+You can then build the datasets with:
 ```bash
-virtualenv .venv
-source .venv/bin/activate
+python -m datasets.build
 ```
 
 You may need to install the requirements of some drivers such as: https://pypi.org/project/mysqlclient/

@@ -29,11 +29,11 @@ class Database:
         """Return all the tables"""
         return self.metadata().sorted_tables
 
-    def url(self) -> str:
+    def url(sell) -> str:
         """Return the canonical url"""
         raise NotImplementedError()
 
-    def dump(self) -> str:
+    def declaration(self) -> str:
         """Return the CREATE TABLE statement"""
         result = StringIO()
         def dump(sql, *multiparams, **params) -> str:
@@ -41,6 +41,16 @@ class Database:
         engine = create_mock_engine('postgresql+psycopg://', dump)
         self.metadata().create_all(engine, checkfirst=True)
         return result.getvalue()
+
+    # Dump .sql files
+    def dump(self, path: str) -> None:
+        """Dump"""
+        raise NotImplementedError()
+    
+    # Load .sql files
+    def load(self, path: str) -> None:
+        """Load"""
+        raise NotImplementedError()
     
 class MutableDatabase(Database):
     def schema(self) -> str:
