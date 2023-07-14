@@ -5,8 +5,6 @@ import logging
 from sqlalchemy import Engine, MetaData, Table, Column, create_mock_engine, select, insert
 from sqlalchemy.schema import CreateSchema, CreateTable
 
-logging.basicConfig(level=logging.DEBUG)
-
 MAX_TABLE_SIZE = 10000
 
 class Database:
