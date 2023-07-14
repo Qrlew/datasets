@@ -19,13 +19,18 @@ class MariaDB(MutableDatabase):
 
     def try_get_existing(self) -> Optional[Engine]:
         """Try to connect to mariadb"""
-        try:
-            engine = create_engine(f'mysql+pymysql://{self.user}:{self.password}@localhost:{self.port}')
-            # Try to connect
-            conn = engine.connect()
-            conn.close()
-            return engine
-        except:
+        if subprocess.run(['docker', 'exec', self.name, 'mariadb-admin',
+                              f'--password={self.password}',
+                              'status']).returncode == 0:
+            try:
+                engine = create_engine(f'mysql+pymysql://{self.user}:{self.password}@localhost:{self.port}')
+                # Try to connect
+                conn = engine.connect()
+                conn.close()
+                return engine
+            except:
+                return None
+        else:
             return None
 
     def try_get_container(self) -> Optional[Engine]:
