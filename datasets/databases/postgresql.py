@@ -22,15 +22,18 @@ class PostgreSQL(MutableDatabase):
 
     def try_get_existing(self) -> Optional[Engine]:
         """Try to connect to postgresql"""
-        try:
-            engine = create_engine(f'postgresql+psycopg://{self.user}:{self.password}@localhost:{self.port}/postgres')
-            # Try to connect
-            with engine.connect() as conn:
-                tables = conn.execute(text('''SELECT * FROM pg_catalog.pg_tables WHERE schemaname='public' '''))
-                for table in tables:
-                    print(table)
-            return engine
-        except:
+        if subprocess.run(['docker', 'exec', self.name, 'pg_isready']).returncode == 0:
+            try:
+                engine = create_engine(f'postgresql+psycopg://{self.user}:{self.password}@localhost:{self.port}/postgres')
+                # Try to connect
+                with engine.connect() as conn:
+                    tables = conn.execute(text('''SELECT * FROM pg_catalog.pg_tables WHERE schemaname='public' '''))
+                    for table in tables:
+                        print(table)
+                return engine
+            except:
+                return None
+        else:
             return None
 
     def try_get_container(self) -> Optional[Engine]:
