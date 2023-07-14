@@ -1,5 +1,6 @@
 from typing import Optional
 from time import sleep
+import logging
 import subprocess
 from sqlalchemy import create_engine, Engine, MetaData, text
 from datasets.database import MutableDatabase
@@ -79,6 +80,7 @@ class PostgreSQL(MutableDatabase):
     
     def load(self, path: str) -> None:
         """Load psql"""
+        logging.info(f'Loading {path}')
         subprocess.run(['docker', 'exec', self.name, 'psql',
                         '--host=localhost',
                         f'--username={self.user}',
