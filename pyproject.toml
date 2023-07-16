@@ -5,6 +5,7 @@ description = "Sample SQL datasets"
 authors = ["Nicolas Grislain <ng@sarus.tech>"]
 license = "Apache 2.0"
 readme = "README.md"
+packages = [{include = "datasets"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
