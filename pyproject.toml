@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "datasets"
+name = "qrlew-datasets"
 version = "0.1.0"
 description = "Sample SQL datasets"
 authors = ["Nicolas Grislain <ng@sarus.tech>"]
