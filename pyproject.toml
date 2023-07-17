@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "qrlew-datasets"
-version = "0.2.2"
+version = "0.2.3"
 description = "Sample SQL datasets"
 authors = ["Nicolas Grislain <ng@sarus.tech>"]
 license = "Apache 2.0"
