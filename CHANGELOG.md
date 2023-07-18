@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.3] - 2023-07-18
+## [0.2.5] - 2023-07-18
+### Added
+- `extract`` source added
+
+## [0.2.4] - 2023-07-18
 ### Fixed
 - Password was not well passed over
 
+## [0.2.3] - 2023-07-18
 ## [0.2.2] - 2023-07-11
 
 ### Added
