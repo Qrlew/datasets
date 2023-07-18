@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.6] - 2023-07-18
+### Added
+- An existing db can be used even when for load and dump
+
 ## [0.2.5] - 2023-07-18
 ### Added
-- `extract`` source added
+- `extract` source added
 
 ## [0.2.4] - 2023-07-18
 ### Fixed
