@@ -48,7 +48,7 @@ class PostgreSQL(MutableDatabase):
                 '--volume', '/tmp:/tmp',
                 '--name', self.name,
                 '--detach', '--rm',
-                '--env', f'POSTGRES_PASSWORD={PASSWORD}',
+                '--env', f'POSTGRES_PASSWORD={self.password}',
                 '--net', self.net,
                 '--publish', f'{self.port}:5432',
                 'postgres'])
