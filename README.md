@@ -35,3 +35,4 @@ sudo -u postgres psql -U postgres -c "ALTER USER postgres PASSWORD 'pyqrlew-db'"
 # Install python packages
 
 ```
+<!-- TODO port not working -->
