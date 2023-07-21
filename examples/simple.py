@@ -5,7 +5,7 @@ from datasets.databases import PostgreSQL
 
 logging.basicConfig(level=logging.DEBUG)
 
-name = 'example-db'
+name = 'pyqrlew-db'
 # subprocess.run([
 #     'docker',
 #     'run',
@@ -18,6 +18,6 @@ name = 'example-db'
 #     'postgres'])
 
 db = PostgreSQL(name=name, user='postgres', password=name, port=5432)
-db.load('/tmp/extract.sql')
+db.load('/datasets/datasets/sources/extract/extract.sql')
 db.set_schema('extract')
-db.dump('test.dump')
+db.dump('/tmp/test.dump')
