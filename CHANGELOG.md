@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.3.1] - 2023-07-24
+### Added
+- Add retail dataset
+
 ## [0.2.6] - 2023-07-18
 ### Added
 - An existing db can be used even when for load and dump
