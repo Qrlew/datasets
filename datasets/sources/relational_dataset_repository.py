@@ -1,4 +1,5 @@
-from sqlalchemy import Engine, create_engine
+from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 from datasets.database import Database
 
 class RelationalDatasetRepository(Database):
