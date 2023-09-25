@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.4.0] - 2023-07-24
+## [0.4.1] - 2023-09-25
+### Fixed
+- psycopg optional dependencies fixed
+
+## [0.4.0] - 2023-09-25
 ### Changed
 - Python version (to 3.8 from 3.9), sqlalchemy version (to <2.0 from ^2.0.18) and psycopg (^3.1.9) to psycopg2 (<3.0)
 
