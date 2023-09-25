@@ -1,7 +1,8 @@
 from typing import Optional
 from time import sleep
 import subprocess
-from sqlalchemy import create_engine, Engine, MetaData, text
+from sqlalchemy import create_engine, MetaData, text
+from sqlalchemy.engine import Engine
 from datasets.database import MutableDatabase
 
 NAME: str = "qrlew-mariadb"

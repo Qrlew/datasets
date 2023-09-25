@@ -18,6 +18,6 @@ name = 'pyqrlew-db'
 #     'postgres'])
 
 db = PostgreSQL(name=name, user='postgres', password=name, port=5433)
-db.load('/datasets/datasets/sources/extract/extract.sql')
+db.load('datasets/sources/extract/extract.sql')
 db.set_schema('extract')
 db.dump('/tmp/test.dump')

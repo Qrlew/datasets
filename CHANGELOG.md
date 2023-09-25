@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2023-07-24
+### Changed
+- Python version (to 3.8 from 3.9), sqlalchemy version (to <2.0 from ^2.0.18) and psycopg (^3.1.9) to psycopg2 (<3.0)
+
 ## [0.3.2] - 2023-07-24
 ### Fixed
 - Add schema in dataset retail

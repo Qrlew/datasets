@@ -2,7 +2,8 @@ from typing import Optional
 from time import sleep
 import logging
 import subprocess
-from sqlalchemy import create_engine, Engine, MetaData, text
+from sqlalchemy import create_engine, text
+from sqlalchemy.engine import Engine
 from datasets.database import MutableDatabase
 from datasets.network import Network
 
@@ -24,7 +25,7 @@ class PostgreSQL(MutableDatabase):
         """Try to connect to postgresql"""
         logging.info("Try connecting to existing DB")
         try:
-            engine = create_engine(f'postgresql+psycopg://{self.user}:{self.password}@localhost:{self.port}/postgres')
+            engine = create_engine(f'postgresql+psycopg2://{self.user}:{self.password}@localhost:{self.port}/postgres')
             # Try to connect
             with engine.connect() as conn:
                 tables = conn.execute(text('''SELECT * FROM pg_catalog.pg_tables WHERE schemaname='public' '''))
