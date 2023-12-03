@@ -1,4 +1,4 @@
-from datasets.sources.relational_dataset_repository import RelationalDatasetRepository
+from qrlew_datasets.sources.relational_dataset_repository import RelationalDatasetRepository
 
 class Financial(RelationalDatasetRepository):
     def __init__(self) -> None:

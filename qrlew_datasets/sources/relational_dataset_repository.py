@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
-from datasets.database import Database
+from qrlew_datasets.database import Database
 
 class RelationalDatasetRepository(Database):
     def __init__(self, name: str) -> None:

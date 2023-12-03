@@ -3,7 +3,7 @@ from time import sleep
 import subprocess
 from sqlalchemy import create_engine, MetaData, text
 from sqlalchemy.engine import Engine
-from datasets.database import MutableDatabase
+from qrlew_datasets.database import MutableDatabase
 
 NAME: str = "qrlew-mariadb"
 PORT: int = 3306

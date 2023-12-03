@@ -4,8 +4,8 @@ import logging
 import subprocess
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Engine
-from datasets.database import MutableDatabase
-from datasets.network import Network
+from qrlew_datasets.database import MutableDatabase
+from qrlew_datasets.network import Network
 
 NAME: str = "qrlew-psql"
 PORT: int = 5432

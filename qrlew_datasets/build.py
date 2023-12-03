@@ -1,6 +1,6 @@
 import logging
-from datasets.sources import Loader, Financial, IMDB, Hepatitis
-from datasets.databases import PostgreSQL
+from qrlew_datasets.sources import Loader, Financial, IMDB, Hepatitis
+from qrlew_datasets.databases import PostgreSQL
 
 logging.basicConfig(level=logging.DEBUG)
 

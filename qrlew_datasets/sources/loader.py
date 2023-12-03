@@ -1,6 +1,6 @@
 import subprocess
-from datasets.database import Database
-from datasets.network import Network
+from qrlew_datasets.database import Database
+from qrlew_datasets.network import Network
 
 NAME: str = "qrlew-pgloader"
 

@@ -1,6 +1,10 @@
 import os.path
 import importlib.resources as pkg_resources
-from datasets import sources
+from qrlew_datasets.file import SQL, CSV
 
-def test_financial():
-    assert os.path.exists('financial' / pkg_resources.files(sources) / 'financial' / 'financial.sql')
+def test_files():
+    for sql_source in ['extract', 'financial', 'hepatitis', 'imdb', 'retail']:
+        print(SQL(sql_source))
+    
+    for csv_source in ['heart_data']:
+        print(CSV(csv_source))

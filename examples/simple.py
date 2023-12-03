@@ -1,7 +1,7 @@
 
 import subprocess
 import logging
-from datasets.databases import PostgreSQL
+from qrlew_datasets.databases import PostgreSQL
 
 logging.basicConfig(level=logging.DEBUG)
 
