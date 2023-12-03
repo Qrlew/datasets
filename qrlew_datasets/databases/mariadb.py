@@ -18,7 +18,7 @@ class MariaDB(MutableDatabase):
         self.port = port
         self.engine()
 
-    def try_get_existing(self) -> Optional[Engine]:
+    def existing_engine(self) -> Optional[Engine]:
         """Try to connect to mariadb"""
         if subprocess.run(['docker', 'exec', self.name, 'mariadb-admin',
                               f'--password={self.password}',
@@ -34,7 +34,7 @@ class MariaDB(MutableDatabase):
         else:
             return None
 
-    def try_get_container(self) -> Optional[Engine]:
+    def container_engine(self) -> Optional[Engine]:
         """Try to start or run a mariadb container"""
         # Try to start an existing container
         if subprocess.run(['docker', 'start', self.name]).returncode != 0:
@@ -57,25 +57,25 @@ class MariaDB(MutableDatabase):
             print("Waiting mariadb to be ready...")
             sleep(1)
             attempts += 1
-        return self.try_get_existing()
+        return self.existing_engine()
 
     # Implements engine
     def engine(self) -> Engine:
         """Create a mariadb engine"""
-        engine = self.try_get_existing()
+        engine = self.existing_engine()
         if engine is None:
-            engine = self.try_get_container()
+            engine = self.container_engine()
         assert(engine is not None)
         return engine
     
-    # Dump psql files
+    # Dump mariadb files
     def dump(self, path: str) -> None:
-        """Dump psql"""
+        """Dump mariadb"""
         self._dump('localhost', self.user, self.password, self.schema(), path)
     
-    # Dump psql files
+    # Dump mariadb files
     def _dump(self, host: str, user: str, password: str, db: str, path: str) -> None:
-        """Dump psql"""
+        """mariadb-dump"""
         subprocess.run(['docker', 'exec', self.name, 'mariadb-dump',
                         f'--host={host}',
                         f'--user={user}',

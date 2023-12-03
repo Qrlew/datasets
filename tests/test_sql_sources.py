@@ -1,6 +1,6 @@
 import os.path
 import importlib.resources as pkg_resources
-from qrlew_datasets.file import SQL, CSV
+from qrlew_datasets.files import SQL, CSV
 
 def test_files():
     for sql_source in ['extract', 'financial', 'hepatitis', 'imdb', 'retail']:
